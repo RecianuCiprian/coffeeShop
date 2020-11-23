@@ -6,14 +6,14 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const DURATION = 500
 
 const Deck: React.FC<any> = ({children, onChange, shouldAnimate}) => {
-    const position = useRef(new Animated.ValueXY()).current
+    const position = useRef<any>(new Animated.ValueXY()).current
     const resetPosition = () => {
         Animated.spring(position, {
             toValue: {x: 0, y: 0},
             useNativeDriver: true
         }).start()
     }
-    const forceSwipe = (direction) => {
+    const forceSwipe = (direction: any) => {
         const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
         Animated.timing(position, {
             toValue: {x, y: 0},
@@ -46,7 +46,7 @@ const Deck: React.FC<any> = ({children, onChange, shouldAnimate}) => {
             },
         })
     ).current
-    const getCardStyle = (position) => {
+    const getCardStyle = () => {
         const rotate = position.x.interpolate({
             inputRange: [-(SCREEN_WIDTH * 1.5), 0, SCREEN_WIDTH * 1.5],
             outputRange: ['-120deg', '0deg', '120deg'],
@@ -59,7 +59,7 @@ const Deck: React.FC<any> = ({children, onChange, shouldAnimate}) => {
     const animate  = shouldAnimate ? panResponder.panHandlers : {};
 
     return (<Animated.View
-        style={getCardStyle(position)}
+        style={getCardStyle()}
         {...animate}
     >
         {children}

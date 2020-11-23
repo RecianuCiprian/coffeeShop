@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Animated, FlatList, StyleSheet, View, Dimensions} from "react-native";
+import {FlatList, StyleSheet, View, Dimensions} from "react-native";
 
 import {api} from "../../api";
 import {SEARCH_URL} from "../../api/rest_api";
