@@ -12,8 +12,14 @@ const currentLocation = {
     longitude: "-0.0825"
 };
 
+type TData = {
+    id: string;
+    name: string;
+    image_url: string;
+}
+
 const Shops: React.FC<any> = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<Array<TData>>([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -37,10 +43,8 @@ const Shops: React.FC<any> = () => {
         <View style={styles.container}>
             <FlatList
                 data={data}
-                renderItem={({item, index}) => {
-                    if (index === 0) return <Deck key={item.id} onChange={onChange}><Item {...item}/></Deck>
-                    return <Animated.View key={item.id} ><Item {...item}/></Animated.View>
-                }}
+                renderItem={({item, index}) => <Deck shouldAnimate={index === 0} onChange={onChange}><Item {...item}/></Deck>}
+                keyExtractor={({id}) => id}
             />
         </View>
     );

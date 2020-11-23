@@ -4,8 +4,13 @@ import {StyleSheet, Dimensions} from "react-native";
 
 const width = Dimensions.get('window').width; //full width
 
+type Props = {
+    id: string;
+    name: string;
+    image_url: string;
+}
 
-const Item: React.FC<any> = ({image_url, name}) => {
+const Item: React.FC<Props> = ({image_url, name}) => {
     return (
         <Card>
             <Card.Title>{name}</Card.Title>

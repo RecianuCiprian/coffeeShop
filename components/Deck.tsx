@@ -5,7 +5,7 @@ const SWIPE_THRESHOLD = 125;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const DURATION = 500
 
-const Deck: React.FC<any> = ({children, onChange}) => {
+const Deck: React.FC<any> = ({children, onChange, shouldAnimate}) => {
     const position = useRef(new Animated.ValueXY()).current
     const resetPosition = () => {
         Animated.spring(position, {
@@ -56,9 +56,11 @@ const Deck: React.FC<any> = ({children, onChange}) => {
         }
     }
 
+    const animate  = shouldAnimate ? panResponder.panHandlers : {};
+
     return (<Animated.View
         style={getCardStyle(position)}
-        {...panResponder.panHandlers}
+        {...animate}
     >
         {children}
     </Animated.View>);
