@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View, Dimensions} from "react-native";
+//@ts-ignore
+import {useDispatch, useSelector} from 'react-redux';
 
-import {api} from "../../api";
-import {SEARCH_URL} from "../../api/rest_api";
 import Item from "./Item";
 import Deck from "../Deck";
+import {fetchData} from '../../actions';
 
 const width = Dimensions.get('window').width; //full width
 const currentLocation = {
@@ -19,30 +20,21 @@ type TData = {
 }
 
 const Shops: React.FC<any> = () => {
-    const [data, setData] = useState<Array<TData>>([]);
+    const dispatch = useDispatch();
+    const coffeeShops = useSelector((reduxState) => reduxState.coffeeShops);
 
     useEffect(() => {
-        async function fetchData() {
-            const result = await api.get(SEARCH_URL, {
-                params: {
-                    categories: 'coffee,coffeeroasteries,coffeeshops',
-                    ...currentLocation,
-                }
-            })
-            setData(result.data.businesses)
-        }
-
-        fetchData();
+        dispatch(fetchData());
     }, [])
 
     const onChange = () => {
-        setData((prevData) => prevData.slice(1))
+        // setData((prevData) => prevData.slice(1))
     }
 
     return (
         <View style={styles.container}>
             <FlatList
-                data={data}
+                data={coffeeShops}
                 renderItem={({item, index}) => <Deck shouldAnimate={index === 0} onChange={onChange}><Item {...item}/></Deck>}
                 keyExtractor={({id}) => id}
             />
